@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // res.json() allows us to return JSON instead of a buffer, string, or static file
-app.get('/api/notes', (req, res) => {  
+app.get('/api/notes', (req, res) => {
   res.json(allNotes.slice(1));
 });
 
@@ -35,27 +35,50 @@ app.get('*', (req, res) => {
 
 function generateNewNote(body, notesArray) {
   const newNote = body;
-    //creates an empty array when returned false
-    if (!Array.isArray(notesArray))
-        notesArray = [];
-    
-    if (notesArray.length === 0)
-        notesArray.push(0);
-    //creates unique id
-    body.id = notesArray[0];
-    notesArray[0]++;
-    //pushes note
-    notesArray.push(newNote);
-    fs.writeFileSync(
-        path.join(__dirname, './db/db.json'),
-        JSON.stringify(notesArray, null, 2)
-    );
-    return newNote;
-}
+  //creates an empty array when returned false
+  if (!Array.isArray(notesArray))
+    notesArray = [];
+
+  if (notesArray.length === 0)
+    notesArray.push(0);
+  //creates unique id
+  body.id = notesArray[0];
+  notesArray[0]++;
+  //pushes note
+  notesArray.push(newNote);
+  fs.writeFileSync(
+    path.join(__dirname, './db/db.json'),
+    JSON.stringify(notesArray, null, 2)
+  );
+  return newNote;
+};
+
 // creates the note
 app.post('/api/notes', (req, res) => {
   const newNote = generateNewNote(req.body, allNotes);
   res.json(newNote);
+});
+
+function deleteNote(id, notesArray) {
+  for (let i = 0; i < notesArray.length; i++) {
+    let note = notesArray[i];
+
+    if (note.id == id) {
+      notesArray.splice(i, 1);
+      fs.writeFileSync(
+        path.join(__dirname, './db/db.json'),
+        JSON.stringify(notesArray, null, 2)
+      );
+
+      break;
+    }
+  }
+};
+
+// deletes the note
+app.delete('/api/notes/:id', (req, res) => {
+  deleteNote(req.params.id, allNotes);
+  res.json(true);
 });
 
 
