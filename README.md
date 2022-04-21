@@ -10,3 +10,22 @@ AS A small business owner
 I WANT to be able to write and save notes  
 SO THAT I can organize my thoughts and keep track of tasks I need to complete
 ```
+
+## Contributors
+James Stanley - jamesstanley11@gmail.com 
+
+## Installation
+`
+npm i
+`
+`
+npm i express
+`
+
+## Languages
+* Javascript
+* Node.js
+* Express.js
+
+## Repository Link
+https://github.com/Xallver/JS-Note-Taker
