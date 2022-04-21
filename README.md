@@ -31,4 +31,4 @@ npm i express
 https://github.com/Xallver/JS-Note-Taker
 
 ## Website Link
-https://js-note-taker22.herokuapp.com/notes
+https://js-note-taker22.herokuapp.com
